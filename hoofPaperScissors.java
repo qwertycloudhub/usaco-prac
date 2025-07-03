@@ -1,33 +1,37 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.util.*;
 
 public class game {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int cow1Wins = 0;
 
-        while (n-- > 0){
+        int[] cow1 = new int[4];
+        int[] cow2 = new int[4];
+
+        for (int i = 0; i < n; i++) {
             int f = sc.nextInt();
             int s = sc.nextInt();
-            if (f == 1){
-                if (s == 2){
-                    cow1Wins++;
-                }
-            }
-            else if (f == 2){
-                if (s == 3){
-                    cow1Wins++;
-                }
-            }
-            else if (f == 3){
-                if (s == 1){
-                    cow1Wins++;
-                }
-            }
+            cow1[f]++;
+            cow2[s]++;
         }
-        System.out.println(cow1Wins);
+
+        int wins = 0;
+
+        int beat12 = Math.min(cow1[1], cow2[2]);
+        wins += beat12;
+        cow1[1] -= beat12;
+        cow2[2] -= beat12;
+
+        int beat23 = Math.min(cow1[2], cow2[3]);
+        wins += beat23;
+        cow1[2] -= beat23;
+        cow2[3] -= beat23;
+
+        int beat31 = Math.min(cow1[3], cow2[1]);
+        wins += beat31;
+        cow1[3] -= beat31;
+        cow2[1] -= beat31;
+
+        System.out.println(wins);
     }
 }
